@@ -8,6 +8,8 @@ import android.widget.Toast;
 import com.unnamed.b.atv.model.TreeNode;
 import com.unnamed.b.atv.view.AndroidTreeView;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity implements TreeNode.TreeNodeClickListener {
 
     private RelativeLayout mContinonal;
@@ -83,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements TreeNode.TreeNode
         //把布局添加到root
         treeView = new AndroidTreeView(getApplicationContext(), root);
     treeView.setDefaultAnimation(true);
-        treeView.setUse2dScroll(true);
+//        treeView.setUse2dScroll(true);
         treeView.setDefaultContainerStyle(R.style.TreeNodeStyle);//设置展示布局样式
         treeView.setDefaultNodeClickListener(this);//设置监听
         //设置view添加
@@ -105,13 +107,15 @@ public class MainActivity extends AppCompatActivity implements TreeNode.TreeNode
      */
     @Override
     public void onClick(TreeNode node, Object value) {
+        List<TreeNode> children = node.getChildren();
+        Object value1 = node.getValue();
         String name = ((IconTreeItem) value).getName();
         if ("childs".equals(name)){
             IconTreeItem iconTreeItem4 = new IconTreeItem();
             iconTreeItem4.setName("childs2");
             iconTreeItem4.setIcon(R.mipmap.ic_launcher);
             TreeNode childe = new TreeNode(iconTreeItem4).setViewHolder(new MyHolder(this));//添加布局数据
-            childNocde2.addChildren(childe);
+            node.getParent().addChildren(childe);
             treeView.expandNode(childNocde2);
 
         }
